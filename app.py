@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# --- CONFIGURATION & ENHANCED UI ---
+# --- CONFIGURATION & DARK UI ---
 st.set_page_config(
     page_title="Automation Infrastructure Hub",
     page_icon="🛡️",
@@ -18,60 +18,72 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Professional Gradient UI & Custom Elements
+# VS Code Dark Inspired Theme
 st.markdown("""
     <style>
-    /* Gradient Background for the entire app */
+    /* Main Background - VS Code Charcoal */
     .stApp {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background-color: #1e1e1e;
+        color: #d4d4d4;
     }
     
-    /* High-Contrast Sidebar */
+    /* Sidebar - Slightly darker contrast */
     [data-testid="stSidebar"] {
-        background-color: #1a202c !important;
+        background-color: #252526 !important;
+        border-right: 1px solid #333333;
     }
     [data-testid="stSidebar"] * {
-        color: #ffffff !important;
+        color: #cccccc !important;
     }
     
-    /* Elevated Metric Cards */
+    /* Elevated Metric Cards - Slate Grey */
     [data-testid="stMetric"] {
-        background-color: #ffffff;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        border: 1px solid #e2e8f0;
+        background-color: #2d2d2d;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        border: 1px solid #3c3c3c;
+    }
+    [data-testid="stMetricValue"] {
+        color: #007acc !important; /* VS Code Blue */
     }
 
     /* Form & Container Styling */
     [data-testid="stForm"] {
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: #252526;
         border-radius: 12px;
         padding: 25px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid #3c3c3c;
     }
     
+    /* Dataframe Styling for Dark Mode */
     .stDataFrame {
-        background-color: #ffffff;
-        border-radius: 12px;
+        background-color: #1e1e1e;
+        border-radius: 8px;
     }
 
-    /* Typography */
+    /* Typography - Clean Sans & Monospace for headers */
     h1, h2, h3 {
-        color: #1a202c;
-        font-family: 'Inter', sans-serif;
-        font-weight: 700;
+        color: #ffffff;
+        font-family: 'Consolas', 'Monaco', 'Inter', monospace;
+        font-weight: 600;
     }
     
+    /* Primary Action Buttons - VS Code Blue */
     .stButton>button {
-        width: 100%; border-radius: 6px; height: 3.5em;
-        background-color: #1a73e8; color: white; border: none;
-        font-weight: 600; transition: all 0.3s ease;
+        width: 100%; border-radius: 4px; height: 3.5em;
+        background-color: #007acc; color: white; border: none;
+        font-weight: 600; transition: all 0.2s ease;
     }
     .stButton>button:hover {
-        background-color: #1557b0;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+        background-color: #1f8ad2;
+        border: 1px solid #ffffff33;
+        box-shadow: 0 0 10px rgba(0, 122, 204, 0.4);
+    }
+    
+    /* Input field text color fix */
+    input {
+        color: #ffffff !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -108,9 +120,9 @@ def trigger_external_service(payload, endpoint_url):
 
 # --- SIDEBAR NAVIGATION ---
 with st.sidebar:
-    st.image("https://img.icons8.com/fluency/96/shield.png", width=80)
+    st.image("https://img.icons8.com/fluency/96/code-file.png", width=60)
     st.title("Hub Control")
-    st.markdown("v1.4.5 | Production")
+    st.markdown("v1.5.0 | Dark Mode")
     st.write("---")
     
     nav = st.radio("Navigation", ["Dashboard", "Analytics", "System Logs", "Settings"])
@@ -141,7 +153,7 @@ if nav == "Dashboard":
 
     with left_col:
         st.subheader("Intake Control")
-        # Visual filler for intake
+        # Visual filler - Subtle dark icon
         st.image("https://img.icons8.com/clouds/200/database.png", width=100)
         
         with st.form("lead_form", clear_on_submit=True):
@@ -186,8 +198,8 @@ if nav == "Dashboard":
             csv = df.to_csv(index=False).encode('utf-8')
             st.download_button("Export Ledger (CSV)", data=csv, file_name="ledger_export.csv")
         else:
-            st.info("No active records found.")
-            st.image("https://img.icons8.com/clouds/400/opened-folder.png", use_container_width=True)
+            st.info("No active records found. System idling.")
+            st.image("https://img.icons8.com/clouds/400/code.png", use_container_width=True)
 
 elif nav == "Analytics":
     st.title("System Analytics")
