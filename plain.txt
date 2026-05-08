@@ -1,0 +1,5 @@
+automation-hub/
+├── app.py              # The Main Web App (Streamlit & Backend Logic)
+├── requirements.txt    # List of libraries for Railway to install
+├── .env                # For your private API keys (do not upload to GitHub)
+└── .gitignore          # To tell Git to ignore the .env file
